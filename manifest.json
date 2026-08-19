@@ -1,0 +1,9 @@
+{
+  "name": "sillytavern-gacha-only",
+  "display_name": "Gachapon (Rút gọn)",
+  "version": "1.0.0",
+  "author": "Kaiz ver (bản gốc) · rút gọn theo yêu cầu người dùng",
+  "description": "Chỉ còn máy Gachapon quay vật phẩm miễn phí + Balo, đã bỏ nông trại/dungeon/thú cưng/cá cược/chợ/trade/đồng bộ mạng.",
+  "js": "index.js",
+  "requires": []
+}

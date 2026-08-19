@@ -1,0 +1,48 @@
+name: Build index.js
+
+# Tự động chạy mỗi khi bạn đẩy code mới lên nhánh main (hoặc chỉnh sửa trực tiếp trên GitHub),
+# và cũng có thể bấm chạy tay trong tab "Actions" (nút "Run workflow").
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "src/**"
+      - "build.js"
+      - "package.json"
+      - ".github/workflows/build.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cài Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Cài dependencies
+        run: npm install
+
+      - name: Build index.js
+        run: npm run build
+
+      - name: Commit index.js nếu có thay đổi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.js
+          if ! git diff --cached --quiet; then
+            git commit -m "🤖 Tự động build index.js [skip ci]"
+            git push
+          else
+            echo "index.js không đổi, bỏ qua commit."
+          fi
